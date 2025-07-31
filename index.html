@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Polaroid Image Cards on Rope</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FFC1CC;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .rope-container {
+      position: absolute;
+      top: 10%;
+      width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: flex-start;
+      padding: 0 20px;
+    }
+
+    .rope {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right, #8B4513, #D2B48C, #8B4513);
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px #654321;
+      z-index: 1;
+    }
+
+    .card {
+      position: relative;
+      width: 140px;
+      height: 200px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 2;
+      padding-top: 10px;
+    }
+
+    .card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 3px;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      animation: fadeIn 1.5s ease-in-out 0.5s forwards;
+    }
+
+    .card-text {
+      position: absolute;
+      bottom: 20px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+      text-align: center;
+      width: 100%;
+      line-height: 1;
+    }
+
+    .custom-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -200px);
+      text-align: center;
+      width: 100%;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 3;
+      opacity: 0;
+      animation: dropText 1.5s ease-out forwards;
+    }
+
+    .custom-text span {
+      display: block;
+    }
+
+    @keyframes dropText {
+      0% { transform: translate(-50%, -200px); opacity: 0; }
+      100% { transform: translate(-50%, 100px); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .circle-section {
+      margin-top: 100vh;
+      background-color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .circle-container {
+      width: 500px;
+      height: 500px;
+      position: relative;
+      animation: rotateContainer 20s linear infinite;
+    }
+
+    @keyframes rotateContainer {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .circle-container img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      z-index: 2;
+      text-align: center;
+    }
+
+    /* NEW HEART SECTION */
+    .heart-section {
+      background-color: #ffc1cc;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .heart-section h2 {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #d10068;
+    }
+
+    .iframe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Updated styling for iframes */
+    iframe {
+      border-radius: 12px;
+      border: 3px solid #d10068; /* Added a border to the embeds */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added a box-shadow */
+      width: 100%; /* Make iframes fill the grid column */
+    }
+  .flower-slide {
+    background-color: #fff;
+    padding: 60px 20px 0 20px;
+    text-align: center;
+    position: relative;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .thank-you-heading {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ff69b4;
+    margin: 0;
+  }
+
+  .thank-you-sub {
+    font-size: 1.5em;
+    color: #555;
+    margin: 10px 0 30px 0;
+  }
+
+  .flower-field {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding-bottom: 0;
+  }
+
+  .flower {
+    width: 180px;
+    height: 320px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flower::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 12px;
+    height: 140px;
+    background-color: #228B22;
+    z-index: 0;
+  }
+
+  .flower img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    z-index: 1;
+    background: #FFC0CB;
+    padding: 5px;
+    box-shadow: 0 0 0 30px #ffc0cb, 0 0 0 60px #ffc0cb;
+    object-fit: cover;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+  }
+
+  /* Staggered animation delays for flower images */
+  .flower:nth-child(1) img { animation-delay: 0.5s; }
+  .flower:nth-child(2) img { animation-delay: 0.7s; }
+  .flower:nth-child(3) img { animation-delay: 0.9s; }
+  .flower:nth-child(4) img { animation-delay: 1.1s; }
+  .flower:nth-child(5) img { animation-delay: 1.3s; }
+
+  .shades-slide {
+    background-color: #fef1f6;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .shades-section {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .shades-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .shade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .shade img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 5px solid pink;
+    border-radius: 20px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+  }
+  
+  /* Staggered animation delays for shades images */
+  .shades-row:nth-child(1) .shade:nth-child(1) img { animation-delay: 2s; }
+  .shades-row:nth-child(1) .shade:nth-child(2) img { animation-delay: 2.2s; }
+  .shades-row:nth-child(1) .shade:nth-child(3) img { animation-delay: 2.4s; }
+  .shades-row:nth-child(1) .shade:nth-child(4) img { animation-delay: 2.6s; }
+  .shades-row:nth-child(3) .shade:nth-child(1) img { animation-delay: 2.8s; }
+  .shades-row:nth-child(3) .shade:nth-child(2) img { animation-delay: 3s; }
+  .shades-row:nth-child(3) .shade:nth-child(3) img { animation-delay: 3.2s; }
+  .shades-row:nth-child(3) .shade:nth-child(4) img { animation-delay: 3.4s; }
+
+  .shade p {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #ff69b4;
+  }
+
+  .shades-title {
+    font-size: 2em;
+    color: #ff69b4;
+    font-weight: bold;
+    margin: 40px 0;
+  }
+  </style>
+</head>
+<body>
+  <div class="rope-container">
+    <div class="rope"></div>
+    <div class="card"><img src="1.jfif" alt="Image 1"><div class="card-text">I</div></div>
+    <div class="card"><img src="2.jfif" alt="Image 2"><div class="card-text">L</div></div>
+    <div class="card"><img src="3.jfif" alt="Image 3"><div class="card-text">O</div></div>
+    <div class="card"><img src="4.jfif" alt="Image 4"><div class="card-text">V</div></div>
+    <div class="card"><img src="5.jfif" alt="Image 5"><div class="card-text">E</div></div>
+    <div class="card"><img src="6.jfif" alt="Image 6"><div class="card-text">U</div></div>
+  </div>
+
+  <div class="custom-text">
+    <span style="font-size: 40px;">HAPPY GIRLFRIENDS DAY</span>
+    <span style="font-size: 30px;">RUPASHI NEGI</span>
+  </div>
+
+  <div class="circle-section">
+    <div class="circle-container">
+      <div class="circle-text">Us in other universes</div>
+      <img src="8.jfif" style="top: 0%; left: 50%; transform: translate(-50%, -50%);">
+      <img src="9.jfif" style="top: 25%; left: 85%; transform: translate(-50%, -50%);">
+      <img src="10.jpg" style="top: 75%; left: 85%; transform: translate(-50%, -50%);">
+      <img src="11.webp" style="top: 100%; left: 50%; transform: translate(-50%, -50%);">
+      <img src="12.jpg" style="top: 75%; left: 15%; transform: translate(-50%, -50%);">
+      <img src="13.jpg" style="top: 25%; left: 15%; transform: translate(-50%, -50%);">
+      <img src="14.jfif" style="top: 50%; left: 0%; transform: translate(-50%, -50%);">
+      <img src="15.jpg" style="top: 50%; left: 100%; transform: translate(-50%, -50%);">
+      <img src="16.jfif" style="top: 0%; left: 50%; transform: translate(-50%, -50%);">
+    </div>
+  </div>
+
+  <!-- ❤️ Spotify Heart Section ❤️ -->
+  <div class="heart-section">
+    <h2>Now every love song is about you</h2>
+    <div class="iframe-grid">
+      <iframe src="https://open.spotify.com/embed/track/0RJ7HhnQxJEOpGC5Htmez4?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/5aU0fpmu2sdYJVOHVHCz5s?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/2iZeKe5avjtKVmjfSFkpxd?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/7uNnlVit5qDvfOje0pqICF?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/6IQyVF1FX0ayTDpxHQIaB5?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/4wctbqwSUOLtG7LEVQ9try?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/5ye1TParxcolbnNsOXO8qE?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/44AyOl4qVkzS48vBsbNXaC?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/0GQngE2rOYvlKwEQjTAsP8?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/5JCDVLwteSXuwVqjCa7SwH?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/6sF70gMVf9jg8QEogyVqBl?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe src="https://open.spotify.com/embed/track/0u8wprNfOdcWpUlWnfMcpP?utm_source=generator" height="176" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="shades-slide">
+  <div class="shades-section">
+    <div class="shades-row">
+      <div class="shade"><img src="pyaar.jfif"><p>Pyaar</p></div>
+      <div class="shade"><img src="ladai.jfif"><p>Pregnant</p></div>
+      <div class="shade"><img src="cute.jfif"><p>Cute</p></div>
+      <div class="shade"><img src="model.jfif"><p>Model</p></div>
+    </div>
+
+    <h3 class="shades-title">8 Shades of Rupashi</h3>
+
+    <div class="shades-row">
+      <div class="shade"><img src="bhondu.jfif"><p>Bhondu</p></div>
+      <div class="shade"><img src="mazze.jfif"><p>Gussa</p></div>
+      <div class="shade"><img src="aalsi.jfif"><p>Aalsi</p></div>
+      <div class="shade"><img src="bhooki.jfif"><p>Bhooki</p></div>
+    </div>
+
+    <audio id="audioPlayer" loop>
+      <source src="rupashi-theme.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+</div>
+  <div class="flower-slide">
+  <h2 class="thank-you-heading">Thank you for being such an amazing girlfriend</h2>
+  <p class="thank-you-sub">Thank you for these beautiful memories</p>
+
+  <div class="flower-field">
+    <div class="flower">
+      <img src="17.jfif" alt="Flower 1">
+    </div>
+    <div class="flower">
+      <img src="18.jfif" alt="Flower 2">
+    </div>
+    <div class="flower">
+      <img src="19.jfif" alt="Flower 3">
+    </div>
+    <div class="flower">
+      <img src="20.jfif" alt="Flower 4">
+    </div>
+    <div class="flower">
+      <img src="22.jfif" alt="Flower 5">
+    </div>
+  </div>
+</div>
+<script>
+  window.onload = function() {
+    // Animate the initial Polaroid cards and custom text on page load
+    document.querySelectorAll('.card img, .custom-text').forEach(el => el.style.opacity = '1');
+  };
+
+  const shadesSection = document.querySelector('.shades-slide');
+  const audio = document.getElementById('audioPlayer');
+  let audioPlayed = false;
+
+  const playAudioOnScroll = () => {
+    // Get the position of the shades section relative to the viewport
+    const shadesPosition = shadesSection.getBoundingClientRect();
+    
+    // Check if the shades section is in the viewport
+    if (shadesPosition.top < window.innerHeight && shadesPosition.bottom >= 0 && !audioPlayed) {
+      audio.play().then(() => {
+        console.log("Audio is playing due to user scrolling to the Shades section.");
+        audioPlayed = true; // Set flag to prevent replaying
+      }).catch(error => {
+        console.log("Audio autoplay was prevented. User interaction required.");
+      });
+    }
+  };
+
+  // Add the scroll event listener
+  window.addEventListener('scroll', playAudioOnScroll);
+</script>
+</body>
+</html>
